@@ -83,6 +83,9 @@ export const skills = [
 export const education = {
   school: 'University of Illinois Urbana-Champaign',
   degree: 'B.S. in Mathematics, Minor in Computer Science',
-  gpa: '3.7 / 4.0',
-  dates: 'Aug 2024 – Dec 2026 (expected)',
+  stats: [
+    { value: '3.7 / 4.0', label: 'GPA' },
+    { value: 'Dec 2026', label: 'Graduating' },
+    { value: 'Math + CS', label: 'Focus' },
+  ],
 }

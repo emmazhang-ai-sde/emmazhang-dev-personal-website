@@ -1,5 +1,7 @@
 <script setup>
 import { skills } from '../data/resume.js'
+
+const tones = ['blue', 'purple', 'amber', 'green']
 </script>
 
 <template>
@@ -17,7 +19,14 @@ import { skills } from '../data/resume.js'
         >
           <h3 class="skill-category">{{ group.category }}</h3>
           <div class="skill-items">
-            <span v-for="item in group.items" :key="item" class="chip">{{ item }}</span>
+            <span
+              v-for="item in group.items"
+              :key="item"
+              class="chip"
+              :class="`chip--${tones[i % tones.length]}`"
+            >
+              {{ item }}
+            </span>
           </div>
         </div>
       </div>
@@ -33,14 +42,16 @@ import { skills } from '../data/resume.js'
 }
 
 .skill-card {
-  background: var(--bg-alt);
-  border-radius: var(--radius-card);
+  background: var(--card-bg);
+  border: 1px solid var(--grey-line);
+  border-radius: var(--r-card);
+  box-shadow: var(--shadow-card);
   padding: 32px;
 }
 
 .skill-category {
   font-size: 19px;
-  font-weight: 600;
+  font-weight: 700;
   margin-bottom: 16px;
 }
 

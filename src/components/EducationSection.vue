@@ -3,35 +3,73 @@ import { education } from '../data/resume.js'
 </script>
 
 <template>
-  <section id="education" class="section section--alt">
-    <div class="section-inner education">
-      <p class="section-eyebrow" v-reveal>Education</p>
-      <h2 class="section-title" v-reveal>{{ education.school }}</h2>
-      <p class="education-degree" v-reveal>{{ education.degree }}</p>
-      <p class="education-meta" v-reveal>
-        GPA {{ education.gpa }} · {{ education.dates }}
-      </p>
+  <section id="education" class="section">
+    <div class="section-inner">
+      <div class="edu-band" v-reveal>
+        <p class="section-eyebrow">Education</p>
+        <h2 class="edu-school">{{ education.school }}</h2>
+        <p class="edu-degree">{{ education.degree }}</p>
+
+        <div class="edu-stats">
+          <div v-for="stat in education.stats" :key="stat.label" class="edu-stat">
+            <p class="edu-stat-value">{{ stat.value }}</p>
+            <p class="edu-stat-label">{{ stat.label }}</p>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 </template>
 
 <style scoped>
-.education {
+.edu-band {
+  background: var(--grad-mint-soft);
+  border-radius: var(--r-block);
+  padding: 64px 48px;
   text-align: center;
 }
 
-.education .section-title {
-  margin-bottom: 16px;
+.edu-band .section-eyebrow {
+  color: var(--text-soft);
 }
 
-.education-degree {
-  font-size: 21px;
-  color: var(--text);
+.edu-school {
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.1;
 }
 
-.education-meta {
-  font-size: 17px;
-  color: var(--text-tertiary);
-  margin-top: 8px;
+.edu-degree {
+  font-size: 18px;
+  color: var(--text-soft);
+  margin-top: 12px;
+}
+
+.edu-stats {
+  margin-top: 44px;
+  display: flex;
+  justify-content: center;
+  gap: clamp(32px, 8vw, 96px);
+  flex-wrap: wrap;
+}
+
+.edu-stat-value {
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.edu-stat-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-soft);
+  margin-top: 4px;
+}
+
+@media (max-width: 734px) {
+  .edu-band {
+    padding: 44px 24px;
+  }
 }
 </style>

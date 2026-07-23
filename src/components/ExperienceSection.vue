@@ -14,26 +14,32 @@ import { experience } from '../data/resume.js'
         class="job-card"
         v-reveal="{ delay: i * 80 }"
       >
-        <div class="job-header">
-          <div>
-            <h3 class="job-role">{{ job.role }}</h3>
-            <p class="job-company">
-              {{ job.company }}
-              <span class="job-descriptor"> — {{ job.descriptor }}</span>
-            </p>
-          </div>
-          <div class="job-meta">
-            <p>{{ job.dates }}</p>
-            <p>{{ job.location }}</p>
-          </div>
+        <!-- browser-chrome header, jobright style -->
+        <div class="job-chrome">
+          <span class="dot" /><span class="dot" /><span class="dot" />
+          <span class="job-chrome-title">{{ job.company }}</span>
+          <span class="job-chrome-dates">{{ job.dates }}</span>
         </div>
 
-        <ul class="job-bullets">
-          <li v-for="bullet in job.bullets" :key="bullet">{{ bullet }}</li>
-        </ul>
+        <div class="job-body">
+          <div class="job-header">
+            <div>
+              <h3 class="job-role">{{ job.role }}</h3>
+              <p class="job-company">
+                {{ job.company }}
+                <span class="job-descriptor"> — {{ job.descriptor }}</span>
+              </p>
+            </div>
+            <p class="job-location">{{ job.location }}</p>
+          </div>
 
-        <div class="job-stack">
-          <span v-for="tech in job.stack" :key="tech" class="chip">{{ tech }}</span>
+          <ul class="job-bullets">
+            <li v-for="bullet in job.bullets" :key="bullet">{{ bullet }}</li>
+          </ul>
+
+          <div class="job-stack">
+            <span v-for="tech in job.stack" :key="tech" class="chip chip--mint">{{ tech }}</span>
+          </div>
         </div>
       </article>
     </div>
@@ -43,27 +49,70 @@ import { experience } from '../data/resume.js'
 <style scoped>
 .job-card {
   background: var(--card-bg);
-  border-radius: var(--radius-card);
-  padding: 40px;
-  margin-bottom: 24px;
+  border: 1px solid var(--ink-border);
+  border-radius: var(--r-card);
+  box-shadow: var(--shadow-card);
+  margin-bottom: 28px;
+  overflow: hidden;
+  transition:
+    transform 0.25s var(--ease-out),
+    box-shadow 0.25s var(--ease-out);
+}
+
+.job-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lift);
+}
+
+.job-chrome {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--ink-border);
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--text);
+}
+
+.job-chrome-title {
+  margin-left: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.job-chrome-dates {
+  margin-left: auto;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+}
+
+.job-body {
+  padding: 28px 32px 32px;
 }
 
 .job-header {
   display: flex;
   justify-content: space-between;
+  align-items: baseline;
   gap: 16px;
   flex-wrap: wrap;
 }
 
 .job-role {
   font-size: 24px;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: -0.01em;
 }
 
 .job-company {
   font-size: 17px;
-  color: var(--text);
   margin-top: 4px;
 }
 
@@ -71,21 +120,23 @@ import { experience } from '../data/resume.js'
   color: var(--text-tertiary);
 }
 
-.job-meta {
-  text-align: right;
+.job-location {
   font-size: 14px;
   color: var(--text-tertiary);
-  line-height: 1.5;
   flex-shrink: 0;
 }
 
 .job-bullets {
-  margin: 24px 0 0;
+  margin: 22px 0 0;
   padding-left: 20px;
   display: grid;
   gap: 10px;
   color: var(--text-secondary);
   font-size: 16px;
+}
+
+.job-bullets li::marker {
+  color: var(--link);
 }
 
 .job-stack {
@@ -96,12 +147,12 @@ import { experience } from '../data/resume.js'
 }
 
 @media (max-width: 734px) {
-  .job-card {
-    padding: 28px 24px;
+  .job-body {
+    padding: 22px 20px 26px;
   }
 
-  .job-meta {
-    text-align: left;
+  .job-chrome-dates {
+    display: none;
   }
 }
 </style>

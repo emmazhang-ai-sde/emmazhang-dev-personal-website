@@ -48,6 +48,28 @@ accent `#0071e3`. Dark: bg `#000` / alt `#161617`, text `#f5f5f7`, accent
 `#2997ff`. Radius 18px cards / 980px pills. Body 17px, letter-spacing
 -0.022em; display sizes clamp() against viewport.
 
+## v2 — jobright fusion (2026-07-23)
+
+The pure-Apple v1 read too plain. v2 merges it with the jobright.ai mint system
+captured in `~/ui-design-references/jobright/` (tokens file + design doc there).
+The split: **Apple keeps the bones** (system type, whitespace, hierarchy,
+restrained motion), **jobright supplies the skin** (color, borders, shapes).
+
+| Element | v1 (Apple) | v2 (fusion) |
+|---|---|---|
+| Accent | `#0071e3` blue | `#00f0a0` mint, `#28c86e` links |
+| Nav | full-width hairline blur bar | floating pill (radius 32, blur, shadow) |
+| Hero | white, gradient text | `#ecffe0` lime ground, corner scoop `0 0 120px 0`, ink name with mint highlighter swipe |
+| Cards | borderless grey/white | white + 1px ink border, radius 16, browser-chrome header (3 dots) on experience cards |
+| Buttons | blue pill | black pill (primary), mint pill + ink border (secondary) |
+| Chips | grey | tinted color-coded (blue/purple/amber/green per skill category, mint for job stacks) |
+| Education | plain centered | mint 266° gradient stat band |
+| Contact | gradient text on white | big rounded mint block, ink text, black pill |
+| Signature | gradient name | floating "STRONG MATCH 98%" score-ring card in hero (jobright job-card homage; hidden on mobile) |
+
+Not reused from jobright: logo, illustrations, copy (per the reference repo's
+usage boundary). Only design values (colors, radii, shadows, shapes).
+
 ## Open items
 
 - [ ] Résumé PDF: drop into `/public`, set `profile.resumeUrl`

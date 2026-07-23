@@ -1,45 +1,101 @@
 /* ---------------------------------------------------------------------------
-   Design tokens — Apple-inspired system.
-   Light-first; dark values switch automatically with the OS.
+   Design tokens — v2 fusion: Apple bones, jobright skin.
+   Mint system values from ~/ui-design-references/jobright/ (design values
+   only; no logo/illustration/copy reuse). Light-first; dark auto-switches.
 --------------------------------------------------------------------------- */
 :root {
   color-scheme: light dark;
 
+  /* grounds */
   --bg: #ffffff;
-  --bg-alt: #f5f5f7;
-  --text: #1d1d1f;
-  --text-secondary: #6e6e73;
-  --text-tertiary: #86868b;
-  --hairline: rgba(0, 0, 0, 0.1);
-  --accent: #0071e3;
-  --accent-hover: #0077ed;
+  --bg-alt: #f7f8f9;
+  --hero-ground: #ecffe0;
   --card-bg: #ffffff;
-  --nav-bg: rgba(251, 251, 253, 0.8);
-  --chip-bg: #e8e8ed;
-  --gradient: linear-gradient(100deg, #0071e3 0%, #7d55ff 45%, #ff375f 90%);
+  --nav-bg: rgba(255, 255, 255, 0.9);
+
+  /* ink & text */
+  --text: #000000;
+  --text-soft: #232424;
+  --text-secondary: #4b5253;
+  --text-tertiary: #9ca3af;
+
+  /* brand */
+  --brand: #00f0a0;
+  --link: #1ca05c;
+  --tint-brand: rgba(0, 240, 160, 0.25);
+
+  /* chip tints (bg) + saturated text */
+  --tint-blue: rgba(20, 200, 240, 0.12);
+  --chip-blue: #0a8fb4;
+  --tint-purple: rgba(140, 120, 255, 0.14);
+  --chip-purple: #6d55f0;
+  --tint-amber: rgba(253, 167, 0, 0.14);
+  --chip-amber: #b87a00;
+  --tint-green: rgba(40, 200, 110, 0.14);
+  --chip-green: #178a4c;
+
+  /* lines & borders */
+  --ink-border: #000000;
+  --grey-line: #eaeaea;
+
+  /* gradients (the 266° mint family) */
+  --grad-mint: linear-gradient(266deg, #acffe1, #cfffc4);
+  --grad-mint-soft: linear-gradient(266deg, #b5ffe4, #d2ffc8);
+
+  /* shadows */
+  --shadow-card: 0 8px 32px 0 rgba(0, 37, 106, 0.04);
+  --shadow-nav: 0 0 0 0.5px rgba(0, 0, 0, 0.04), 0 0 32px 0 rgba(10, 20, 21, 0.06);
+  --shadow-lift: 0 16px 40px 0 rgba(0, 37, 106, 0.1);
+
+  /* shape */
+  --r-card: 16px;
+  --r-block: 24px;
+  --r-pill: 28px;
+  --r-nav: 32px;
+  --scoop: 120px;
 
   --font-sans: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text',
     'Helvetica Neue', 'Segoe UI', Roboto, Arial, sans-serif;
 
   --content-width: 980px;
   --narrow-width: 700px;
-  --radius-card: 18px;
   --ease-out: cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #000000;
-    --bg-alt: #161617;
-    --text: #f5f5f7;
-    --text-secondary: #a1a1a6;
-    --text-tertiary: #86868b;
-    --hairline: rgba(255, 255, 255, 0.14);
-    --accent: #2997ff;
-    --accent-hover: #45a4ff;
-    --card-bg: #1d1d1f;
-    --nav-bg: rgba(22, 22, 23, 0.8);
-    --chip-bg: #2c2c2e;
+    --bg: #101411;
+    --bg-alt: #161d19;
+    --hero-ground: #17231a;
+    --card-bg: #1a231e;
+    --nav-bg: rgba(22, 29, 25, 0.85);
+
+    --text: #f0f7f2;
+    --text-soft: #d8e2db;
+    --text-secondary: #b3c0b7;
+    --text-tertiary: #93a398;
+
+    --link: #3ddb8a;
+    --tint-brand: rgba(0, 240, 160, 0.18);
+
+    --tint-blue: rgba(20, 200, 240, 0.16);
+    --chip-blue: #55d2f0;
+    --tint-purple: rgba(140, 120, 255, 0.2);
+    --chip-purple: #ab9bff;
+    --tint-amber: rgba(253, 167, 0, 0.18);
+    --chip-amber: #f0b445;
+    --tint-green: rgba(40, 200, 110, 0.18);
+    --chip-green: #4fd88a;
+
+    --ink-border: #e6efe9;
+    --grey-line: #263129;
+
+    --grad-mint: linear-gradient(266deg, #123c2e, #1c3320);
+    --grad-mint-soft: linear-gradient(266deg, #16342a, #1e3522);
+
+    --shadow-card: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    --shadow-nav: 0 0 0 0.5px rgba(255, 255, 255, 0.08), 0 0 32px 0 rgba(0, 0, 0, 0.45);
+    --shadow-lift: 0 16px 40px 0 rgba(0, 0, 0, 0.5);
   }
 }
 
@@ -72,7 +128,7 @@ ul {
 }
 
 a {
-  color: var(--accent);
+  color: var(--link);
   text-decoration: none;
 }
 
@@ -81,7 +137,7 @@ a:hover {
 }
 
 :focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--brand);
   outline-offset: 3px;
   border-radius: 4px;
 }
@@ -92,7 +148,7 @@ html {
 
 /* ------------------------------ Shared layout ----------------------------- */
 .section {
-  padding: 120px 22px;
+  padding: 110px 22px;
 }
 
 .section--alt {
@@ -105,29 +161,86 @@ html {
 }
 
 .section-eyebrow {
-  font-size: 17px;
+  font-size: 13px;
   font-weight: 600;
-  color: var(--accent);
-  margin-bottom: 8px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--link);
+  margin-bottom: 10px;
 }
 
 .section-title {
   font-size: clamp(32px, 5vw, 48px);
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: -0.015em;
   line-height: 1.08;
   margin-bottom: 48px;
 }
 
+/* pills */
+.btn-ink,
+.btn-mint {
+  display: inline-block;
+  font-size: 17px;
+  font-weight: 600;
+  padding: 14px 32px;
+  border-radius: var(--r-pill);
+  transition:
+    transform 0.2s var(--ease-out),
+    box-shadow 0.2s var(--ease-out);
+}
+
+.btn-ink {
+  background: var(--text);
+  color: var(--bg);
+}
+
+.btn-mint {
+  background: var(--brand);
+  color: #000;
+  border: 1px solid #000;
+}
+
+.btn-ink:hover,
+.btn-mint:hover {
+  text-decoration: none;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lift);
+}
+
+/* chips */
 .chip {
   display: inline-block;
-  font-size: 12px;
-  font-weight: 500;
+  font-size: 13px;
+  font-weight: 600;
   letter-spacing: 0;
-  color: var(--text-secondary);
-  background: var(--chip-bg);
-  border-radius: 980px;
+  border-radius: 14px;
   padding: 5px 12px;
+}
+
+.chip--mint {
+  background: var(--tint-brand);
+  color: var(--text);
+}
+
+.chip--blue {
+  background: var(--tint-blue);
+  color: var(--chip-blue);
+}
+
+.chip--purple {
+  background: var(--tint-purple);
+  color: var(--chip-purple);
+}
+
+.chip--amber {
+  background: var(--tint-amber);
+  color: var(--chip-amber);
+}
+
+.chip--green {
+  background: var(--tint-green);
+  color: var(--chip-green);
 }
 
 /* --------------------------- Scroll reveal ------------------------------- */
@@ -158,6 +271,6 @@ html {
 
 @media (max-width: 734px) {
   .section {
-    padding: 80px 20px;
+    padding: 72px 20px;
   }
 }

@@ -6,28 +6,53 @@ import { profile } from '../data/resume.js'
   <header id="top" class="hero">
     <div class="hero-inner">
       <p class="hero-greeting" v-reveal>{{ profile.greeting }}</p>
-      <h1 class="hero-name" v-reveal="{ delay: 100 }">{{ profile.name }}.</h1>
+      <h1 class="hero-name" v-reveal="{ delay: 100 }">
+        <span class="hero-highlight">{{ profile.name }}</span>
+      </h1>
       <p class="hero-tagline" v-reveal="{ delay: 220 }">{{ profile.tagline }}</p>
       <p class="hero-subtitle" v-reveal="{ delay: 320 }">{{ profile.subtitle }}</p>
       <div class="hero-actions" v-reveal="{ delay: 420 }">
-        <a class="btn-primary" :href="`mailto:${profile.email}`">Get in touch</a>
-        <a v-if="profile.resumeUrl" class="btn-link" :href="profile.resumeUrl">
-          Download résumé <span aria-hidden="true">›</span>
-        </a>
-        <a v-else class="btn-link" href="#experience">
-          See my work <span aria-hidden="true">›</span>
-        </a>
+        <a class="btn-ink" :href="`mailto:${profile.email}`">Get in touch</a>
+        <a v-if="profile.resumeUrl" class="btn-mint" :href="profile.resumeUrl">Download résumé</a>
+        <a v-else class="btn-mint" href="#experience">See my work</a>
       </div>
     </div>
+
+    <!-- jobright homage: the match-score card, floating over the hero -->
+    <aside class="match-card" aria-hidden="true">
+      <svg class="match-ring" viewBox="0 0 56 56" width="56" height="56">
+        <circle cx="28" cy="28" r="24" fill="none" stroke="var(--grey-line)" stroke-width="5" />
+        <circle
+          cx="28"
+          cy="28"
+          r="24"
+          fill="none"
+          stroke="var(--brand)"
+          stroke-width="5"
+          stroke-linecap="round"
+          stroke-dasharray="150.8"
+          stroke-dashoffset="3"
+          transform="rotate(-90 28 28)"
+        />
+        <text x="28" y="33" text-anchor="middle" class="match-score">98%</text>
+      </svg>
+      <div>
+        <p class="match-role">Software Engineer</p>
+        <p class="match-label">Strong match</p>
+      </div>
+    </aside>
   </header>
 </template>
 
 <style scoped>
 .hero {
-  min-height: calc(100svh - 48px);
+  position: relative;
+  background: var(--hero-ground);
+  border-radius: 0 0 var(--scoop) 0;
+  min-height: 92svh;
   display: flex;
   align-items: center;
-  padding: 80px 22px;
+  padding: 160px 22px 96px;
 }
 
 .hero-inner {
@@ -44,26 +69,19 @@ import { profile } from '../data/resume.js'
 }
 
 .hero-name {
-  font-size: clamp(56px, 11vw, 112px);
+  font-size: clamp(52px, 10vw, 104px);
   font-weight: 700;
   letter-spacing: -0.02em;
-  line-height: 1.05;
-  background: var(--gradient);
-  background-size: 200% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-  animation: gradient-drift 8s ease-in-out infinite alternate;
+  line-height: 1.1;
+  margin-top: 8px;
 }
 
-@keyframes gradient-drift {
-  from {
-    background-position: 0% 50%;
-  }
-  to {
-    background-position: 100% 50%;
-  }
+.hero-highlight {
+  background: var(--grad-mint);
+  border-radius: 20px;
+  padding: 0 0.22em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
 }
 
 .hero-tagline {
@@ -71,7 +89,7 @@ import { profile } from '../data/resume.js'
   font-weight: 600;
   letter-spacing: -0.015em;
   line-height: 1.15;
-  margin-top: 20px;
+  margin-top: 24px;
 }
 
 .hero-subtitle {
@@ -87,30 +105,73 @@ import { profile } from '../data/resume.js'
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 28px;
+  gap: 20px;
   flex-wrap: wrap;
 }
 
-.btn-primary {
-  background: var(--accent);
-  color: #fff;
-  font-size: 17px;
-  padding: 12px 24px;
-  border-radius: 980px;
-  transition: background 0.2s var(--ease-out);
+/* floating match card */
+.match-card {
+  position: absolute;
+  right: max(4%, calc((100% - 1280px) / 2));
+  top: 24%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--card-bg);
+  border: 1px solid var(--ink-border);
+  border-radius: var(--r-card);
+  box-shadow: var(--shadow-card);
+  padding: 16px 20px;
+  transform: rotate(4deg);
+  animation: bob 6s ease-in-out infinite alternate;
 }
 
-.btn-primary:hover {
-  background: var(--accent-hover);
-  text-decoration: none;
+.match-score {
+  font-size: 13px;
+  font-weight: 700;
+  fill: var(--text);
+  font-family: var(--font-sans);
 }
 
-.btn-link {
-  font-size: 17px;
+.match-role {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.match-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--link);
+  margin-top: 2px;
+}
+
+@keyframes bob {
+  from {
+    transform: rotate(4deg) translateY(0);
+  }
+  to {
+    transform: rotate(4deg) translateY(-14px);
+  }
+}
+
+@media (max-width: 1067px) {
+  .match-card {
+    display: none;
+  }
+}
+
+@media (max-width: 734px) {
+  .hero {
+    border-radius: 0 0 64px 0;
+    padding-top: 120px;
+    min-height: 0;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-name {
+  .match-card {
     animation: none;
   }
 }
