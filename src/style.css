@@ -1,0 +1,163 @@
+/* ---------------------------------------------------------------------------
+   Design tokens — Apple-inspired system.
+   Light-first; dark values switch automatically with the OS.
+--------------------------------------------------------------------------- */
+:root {
+  color-scheme: light dark;
+
+  --bg: #ffffff;
+  --bg-alt: #f5f5f7;
+  --text: #1d1d1f;
+  --text-secondary: #6e6e73;
+  --text-tertiary: #86868b;
+  --hairline: rgba(0, 0, 0, 0.1);
+  --accent: #0071e3;
+  --accent-hover: #0077ed;
+  --card-bg: #ffffff;
+  --nav-bg: rgba(251, 251, 253, 0.8);
+  --chip-bg: #e8e8ed;
+  --gradient: linear-gradient(100deg, #0071e3 0%, #7d55ff 45%, #ff375f 90%);
+
+  --font-sans: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text',
+    'Helvetica Neue', 'Segoe UI', Roboto, Arial, sans-serif;
+
+  --content-width: 980px;
+  --narrow-width: 700px;
+  --radius-card: 18px;
+  --ease-out: cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #000000;
+    --bg-alt: #161617;
+    --text: #f5f5f7;
+    --text-secondary: #a1a1a6;
+    --text-tertiary: #86868b;
+    --hairline: rgba(255, 255, 255, 0.14);
+    --accent: #2997ff;
+    --accent-hover: #45a4ff;
+    --card-bg: #1d1d1f;
+    --nav-bg: rgba(22, 22, 23, 0.8);
+    --chip-bg: #2c2c2e;
+  }
+}
+
+/* --------------------------------- Reset --------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 1.47;
+  letter-spacing: -0.022em;
+  color: var(--text);
+  background: var(--bg);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+p,
+ul {
+  margin: 0;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* ------------------------------ Shared layout ----------------------------- */
+.section {
+  padding: 120px 22px;
+}
+
+.section--alt {
+  background: var(--bg-alt);
+}
+
+.section-inner {
+  max-width: var(--content-width);
+  margin: 0 auto;
+}
+
+.section-eyebrow {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.section-title {
+  font-size: clamp(32px, 5vw, 48px);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.08;
+  margin-bottom: 48px;
+}
+
+.chip {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--text-secondary);
+  background: var(--chip-bg);
+  border-radius: 980px;
+  padding: 5px 12px;
+}
+
+/* --------------------------- Scroll reveal ------------------------------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.7s var(--ease-out),
+    transform 0.7s var(--ease-out);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+@media (max-width: 734px) {
+  .section {
+    padding: 80px 20px;
+  }
+}
