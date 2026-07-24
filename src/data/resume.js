@@ -107,56 +107,11 @@ export const sideProjects = [
 
 // Collections — a small library of links with short takes, not a blog.
 // Placeholder items: replace with your own picks and one-line comments.
-export const collections = [
-  {
-    title: 'AI news, with my takes',
-    chip: 'chip--blue',
-    items: [
-      {
-        title: 'Model Context Protocol',
-        url: 'https://modelcontextprotocol.io',
-        note: 'The USB-C moment for AI tools — every agent product I like is quietly converging on it.',
-      },
-      {
-        title: 'NotebookLM Audio Overviews',
-        url: 'https://notebooklm.google',
-        note: 'Turning your own notes into a podcast sounds like a gimmick until you try it on a dense paper.',
-      },
-    ],
-  },
-  {
-    title: 'UI I keep coming back to',
-    chip: 'chip--purple',
-    items: [
-      {
-        title: 'Jobright',
-        url: 'https://jobright.ai',
-        note: 'My favorite web style, period — mint green, heavy type, grey-card rhythm. This site borrows its skin.',
-      },
-      {
-        title: 'Linear',
-        url: 'https://linear.app',
-        note: 'The reference for restraint: nothing moves unless it has a reason to.',
-      },
-    ],
-  },
-  {
-    title: 'Creative AI products',
-    chip: 'chip--amber',
-    items: [
-      {
-        title: 'Suno',
-        url: 'https://suno.com',
-        note: 'Full songs from a prompt. The demos that make non-tech friends actually gasp.',
-      },
-      {
-        title: 'Cursor',
-        url: 'https://cursor.com',
-        note: 'Proof that the best AI products feel like a better version of a tool you already love.',
-      },
-    ],
-  },
-]
+// Empty for now — the overlay shows a "coming soon" state until this is filled.
+// Restore entries in this shape when curation is ready:
+//   { title, chip: 'chip--blue' | 'chip--purple' | 'chip--amber',
+//     items: [{ title, url, note }] }
+export const collections = []
 
 export const skills = [
   {
