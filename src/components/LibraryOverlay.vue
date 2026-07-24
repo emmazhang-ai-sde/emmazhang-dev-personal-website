@@ -29,7 +29,15 @@ watch(
       <div class="library-inner">
         <h2 class="section-title">My AI Library.</h2>
 
-        <div class="collections-grid">
+        <div v-if="!collections.length" class="library-empty">
+          <p class="library-empty-title">Still curating.</p>
+          <p class="library-empty-note">
+            I'm putting together the AI tools, reads, and demos worth sharing.
+            Check back soon.
+          </p>
+        </div>
+
+        <div v-else class="collections-grid">
           <div v-for="group in collections" :key="group.title" class="collection-group">
             <h3 class="collection-title">
               <span class="chip" :class="group.chip">{{ group.items.length }}</span>
@@ -75,6 +83,25 @@ watch(
   grid-template-columns: repeat(3, 1fr);
   gap: 28px;
   align-items: start;
+}
+
+.library-empty {
+  max-width: 460px;
+  margin-top: 48px;
+}
+
+.library-empty-title {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+.library-empty-note {
+  margin-top: 12px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-secondary);
 }
 
 .collection-title {
