@@ -6,7 +6,6 @@ import { education } from '../data/resume.js'
   <section id="education" class="section">
     <div class="section-inner">
       <div class="edu-band" v-reveal>
-        <p class="section-eyebrow">Education</p>
         <h2 class="edu-school">{{ education.school }}</h2>
         <p class="edu-degree">{{ education.degree }}</p>
 
@@ -27,10 +26,6 @@ import { education } from '../data/resume.js'
   border-radius: var(--r-block);
   padding: 64px 48px;
   text-align: center;
-}
-
-.edu-band .section-eyebrow {
-  color: var(--text-soft);
 }
 
 .edu-school {

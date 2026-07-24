@@ -160,15 +160,6 @@ html {
   margin: 0 auto;
 }
 
-.section-eyebrow {
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.13em;
-  text-transform: uppercase;
-  color: var(--link);
-  margin-bottom: 10px;
-}
-
 .section-title {
   font-size: clamp(32px, 5vw, 48px);
   font-weight: 700;
