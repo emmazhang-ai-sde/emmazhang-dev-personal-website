@@ -15,7 +15,6 @@ const links = [
     <div class="nav-links">
       <a v-for="link in links" :key="link.href" :href="link.href">{{ link.label }}</a>
     </div>
-    <a class="nav-cta" :href="`mailto:${profile.email}`">Say hi</a>
   </nav>
 </template>
 
@@ -66,23 +65,6 @@ const links = [
   text-decoration: none;
 }
 
-.nav-cta {
-  flex-shrink: 0;
-  font-size: 14px;
-  font-weight: 600;
-  color: #000;
-  background: var(--brand);
-  border: 1px solid #000;
-  border-radius: var(--r-pill);
-  padding: 8px 18px;
-  transition: transform 0.2s var(--ease-out);
-}
-
-.nav-cta:hover {
-  text-decoration: none;
-  transform: translateY(-1px);
-}
-
 @media (max-width: 734px) {
   .nav {
     height: 52px;
@@ -93,9 +75,8 @@ const links = [
     gap: 14px;
   }
 
-  /* small screens keep Experience + Skills; Contact is covered by "Say hi" */
-  .nav-links a:nth-child(3),
-  .nav-links a:nth-child(4) {
+  /* small screens keep Experience + Skills + Contact */
+  .nav-links a:nth-child(3) {
     display: none;
   }
 }

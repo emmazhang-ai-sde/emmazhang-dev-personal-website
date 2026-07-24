@@ -12,7 +12,7 @@ export const profile = {
   resumeUrl: null,
   links: [
     { label: 'GitHub', url: 'https://github.com/' },
-    { label: 'LinkedIn', url: 'https://www.linkedin.com/' },
+    { label: 'LinkedIn', url: 'https://www.linkedin.com/in/shuyangzhang-ai-sde/' },
   ],
 }
 

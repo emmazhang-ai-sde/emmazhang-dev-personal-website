@@ -1,5 +1,16 @@
-# Vue 3 + Vite
+# emmazhang.dev
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Personal résumé site for Emma Zhang. Vue 3 + Vite, single-page.
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+See `DESIGN.md` for design decisions and open items.
+
+## Develop
+
+```bash
+npm install
+npm run dev   # http://localhost:5174
+```
+
+## Content
+
+All copy lives in `src/data/resume.js` — edit that file, not the components.
