@@ -1,5 +1,25 @@
 <script setup>
+import { computed } from 'vue'
 import { skills } from '../data/resume.js'
+
+// Flatten every row into lines of chips carrying a running index, so the
+// entrance cascade runs continuously down the whole panel rather than
+// restarting per row. Delay is capped so the tail doesn't drag.
+const STEP = 22
+const MAX_DELAY = 900
+
+const rows = computed(() => {
+  let n = 0
+  return skills.map((group) => ({
+    category: group.category,
+    lines: (group.groups ?? [{ items: group.items }]).map((line) => ({
+      items: line.items.map((label) => ({
+        label,
+        delay: `${Math.min(n++ * STEP, MAX_DELAY)}ms`,
+      })),
+    })),
+  }))
+})
 </script>
 
 <template>
@@ -8,10 +28,20 @@ import { skills } from '../data/resume.js'
       <h2 class="section-title" v-reveal>The toolbox.</h2>
 
       <div class="skills-panel" v-reveal>
-        <div v-for="group in skills" :key="group.category" class="skill-row">
-          <h3 class="skill-category">{{ group.category }}</h3>
-          <div class="skill-items">
-            <span v-for="item in group.items" :key="item" class="skill-chip">{{ item }}</span>
+        <div v-for="row in rows" :key="row.category" class="skill-row">
+          <h3 class="skill-category">{{ row.category }}</h3>
+
+          <!-- a row is one line of chips, or several -->
+          <div class="skill-lines">
+            <div v-for="(line, i) in row.lines" :key="i" class="skill-items">
+              <span
+                v-for="chip in line.items"
+                :key="chip.label"
+                class="skill-chip"
+                :style="{ transitionDelay: chip.delay }"
+                >{{ chip.label }}</span
+              >
+            </div>
           </div>
         </div>
       </div>
@@ -51,20 +81,45 @@ import { skills } from '../data/resume.js'
   gap: 8px;
 }
 
+/* rows broken into separate lines of chips */
+.skill-lines {
+  display: grid;
+  gap: 10px;
+}
+
+/* inverted chips — soft-ink fill, ground-coloured text, so they read as solid
+   tokens rather than outlines; flips automatically in dark mode. No hover
+   state: they are labels, not controls. */
 .skill-chip {
   font-size: 14px;
   font-weight: 600;
   letter-spacing: -0.01em;
-  color: var(--text-soft);
-  background: var(--card-bg);
-  border: 1px solid var(--grey-line);
+  color: var(--bg);
+  background: var(--chip-ink);
   border-radius: var(--r-pill);
-  padding: 8px 16px;
-  transition: border-color 0.2s var(--ease-out);
+  padding: 9px 17px;
+
+  /* entrance cascade: each chip carries its own delay, released when the
+     panel scrolls into view (v-reveal adds .is-visible) */
+  opacity: 0;
+  transform: translateY(10px) scale(0.96);
+  transition:
+    opacity 0.45s var(--ease-out),
+    transform 0.45s var(--ease-out);
 }
 
-.skill-chip:hover {
-  border-color: var(--brand);
+.skills-panel.is-visible .skill-chip {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skill-chip {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    transition-delay: 0ms !important;
+  }
 }
 
 @media (max-width: 734px) {

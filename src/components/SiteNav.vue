@@ -1,4 +1,5 @@
 <script setup>
+import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { profile } from '../data/resume.js'
 
 const props = defineProps({ libraryOpen: Boolean })
@@ -14,12 +15,51 @@ function go(event, href) {
 }
 
 const links = [
-  { label: 'Experience', href: '#experience' },
+  { label: 'Professional Experience', href: '#experience' },
   { label: 'Projects', href: '#projects' },
   { label: 'Skills', href: '#skills' },
   { label: 'Education', href: '#education' },
   { label: 'Contact', href: '#contact' },
 ]
+
+// Scroll spy: whichever section crosses the upper third of the viewport is the
+// one you're "in". Cheaper and steadier than an observer per section, since a
+// tall section can span the whole viewport with no intersection change.
+const activeId = ref('')
+let sections = []
+let ticking = false
+
+function update() {
+  ticking = false
+  const line = window.innerHeight * 0.3
+  let current = ''
+  for (const el of sections) {
+    const { top, bottom } = el.getBoundingClientRect()
+    if (top <= line && bottom > line) {
+      current = el.id
+      break
+    }
+  }
+  activeId.value = current
+}
+
+function onScroll() {
+  if (ticking) return
+  ticking = true
+  requestAnimationFrame(update)
+}
+
+onMounted(() => {
+  sections = links.map((l) => document.querySelector(l.href)).filter(Boolean)
+  window.addEventListener('scroll', onScroll, { passive: true })
+  window.addEventListener('resize', onScroll)
+  update()
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('scroll', onScroll)
+  window.removeEventListener('resize', onScroll)
+})
 </script>
 
 <template>
@@ -30,6 +70,8 @@ const links = [
         v-for="link in links"
         :key="link.href"
         :href="link.href"
+        :class="{ 'is-active': activeId === link.href.slice(1) }"
+        :aria-current="activeId === link.href.slice(1) ? 'true' : undefined"
         @click="go($event, link.href)"
       >{{ link.label }}</a>
     </div>
@@ -48,7 +90,7 @@ const links = [
   left: 50%;
   transform: translateX(-50%);
   z-index: 40;
-  width: min(800px, calc(100% - 32px));
+  width: min(880px, calc(100% - 32px));
   height: 56px;
   padding: 0 10px 0 24px;
   display: flex;
@@ -71,7 +113,7 @@ const links = [
 
 .nav-links {
   display: flex;
-  gap: 24px;
+  gap: 4px;
 }
 
 .nav-links a {
@@ -79,7 +121,23 @@ const links = [
   font-weight: 500;
   letter-spacing: -0.01em;
   color: var(--text-secondary);
-  transition: color 0.2s var(--ease-out);
+  padding: 7px 12px;
+  border-radius: var(--r-pill);
+  white-space: nowrap;
+  transition:
+    color 0.2s var(--ease-out),
+    background-color 0.25s var(--ease-out),
+    box-shadow 0.25s var(--ease-out);
+}
+
+/* the section you're currently scrolled into */
+.nav-links a.is-active {
+  color: var(--text);
+  font-weight: 600;
+  background: var(--tint-brand);
+  box-shadow:
+    0 2px 10px 0 rgba(0, 240, 160, 0.3),
+    0 0 0 1px rgba(0, 240, 160, 0.35);
 }
 
 .nav-brand:hover,

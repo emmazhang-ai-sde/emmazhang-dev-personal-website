@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hero role treatments — variants</title>
+<style>
+:root {
+  color-scheme: light dark;
+  --bg:#fff; --bg-alt:#f7f8f9; --hero-ground:#ecffe0; --card-bg:#fff;
+  --text:#000; --text-soft:#232424; --text-secondary:#4b5253; --text-tertiary:#9ca3af;
+  --brand:#00f0a0; --brand-deep:#0a7d47; --link:#1ca05c; --tint-brand:rgba(0,240,160,.25);
+  --ink-border:#000; --grey-line:#eaeaea;
+  --grad-mint:linear-gradient(266deg,#acffe1,#cfffc4);
+  --shadow-card:0 8px 32px 0 rgba(0,37,106,.04);
+  --shadow-lift:0 16px 40px 0 rgba(0,37,106,.1);
+  --r-card:16px; --r-pill:28px;
+  --font-sans:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue','Segoe UI',Roboto,Arial,sans-serif;
+  --ease-out:cubic-bezier(.25,.1,.25,1);
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#101411; --bg-alt:#161d19; --hero-ground:#17231a; --card-bg:#1a231e;
+    --text:#f0f7f2; --text-soft:#d8e2db; --text-secondary:#b3c0b7; --text-tertiary:#93a398;
+    --brand-deep:#3ad894; --link:#3ddb8a; --tint-brand:rgba(0,240,160,.18);
+    --ink-border:#e6efe9; --grey-line:#263129;
+    --grad-mint:linear-gradient(266deg,#123c2e,#1c3320);
+    --shadow-card:0 8px 32px 0 rgba(0,0,0,.3); --shadow-lift:0 16px 40px 0 rgba(0,0,0,.5);
+  }
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;font-family:var(--font-sans);font-size:17px;line-height:1.47;letter-spacing:-.022em;color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased}
+h1,h2,h3,p,ul{margin:0}
+.note-wrap{max-width:900px;margin:0 auto;padding:44px 22px 0}
+.tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-tertiary);margin-bottom:6px}
+.tag b{color:var(--link)}
+.note{font-size:14px;color:var(--text-secondary);max-width:660px;margin-bottom:20px}
+.stage{background:var(--hero-ground);padding:56px 22px 60px;text-align:center;border-radius:0 0 80px 0;margin-bottom:8px}
+.stage-inner{max-width:900px;margin:0 auto}
+.tagline{font-size:clamp(24px,3.4vw,34px);font-weight:600;letter-spacing:-.015em;line-height:1.15}
+.sub{font-size:17px;line-height:1.5;color:var(--text-secondary);max-width:640px;margin:20px auto 0}
+
+/* 0 — chips (current) */
+.v0-row{list-style:none;padding:0;margin:26px auto 0;display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+.v0-chip{font-size:14px;font-weight:600;color:var(--text-secondary);border:1px solid var(--grey-line);background:var(--card-bg);border-radius:var(--r-pill);padding:8px 18px}
+.v0-chip--p{font-size:16px;font-weight:700;color:#000;background:var(--brand);border:1px solid #000;padding:10px 24px;box-shadow:var(--shadow-card)}
+
+/* A — headline role */
+.vA-role{font-size:clamp(38px,6.4vw,68px);font-weight:700;letter-spacing:-.025em;line-height:1.02;margin-top:18px}
+.vA-mark{background:var(--grad-mint);border-radius:16px;padding:0 .18em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.vA-also{font-size:15px;font-weight:600;color:var(--text-secondary);margin-top:18px}
+.vA-also span{color:var(--text-tertiary);margin:0 8px}
+
+/* B — slash line */
+.vB-line{margin-top:24px;font-size:clamp(17px,2.3vw,22px);font-weight:600;color:var(--text-tertiary);letter-spacing:-.01em;line-height:1.5}
+.vB-line b{color:var(--text);font-weight:700;border-bottom:3px solid var(--brand);padding-bottom:2px}
+.vB-sep{margin:0 10px;opacity:.55}
+
+/* C — typewriter */
+.vC-line{margin-top:22px;font-size:clamp(22px,3.2vw,32px);font-weight:700;letter-spacing:-.02em;min-height:1.3em}
+.vC-fixed{color:var(--text-secondary);font-weight:600}
+.vC-type{color:var(--brand-deep);border-right:2px solid var(--brand-deep);padding-right:2px}
+
+/* D — match cards */
+.vD-grid{margin-top:26px;display:flex;flex-wrap:wrap;justify-content:center;gap:14px}
+.vD-card{display:flex;align-items:center;gap:12px;background:var(--card-bg);border:1px solid var(--ink-border);border-radius:var(--r-card);box-shadow:var(--shadow-card);padding:13px 18px;text-align:left}
+.vD-card--p{transform:scale(1.06);box-shadow:var(--shadow-lift)}
+.vD-role{font-size:14px;font-weight:700;letter-spacing:-.01em}
+.vD-card--p .vD-role{font-size:16px}
+.vD-lab{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--link);margin-top:2px}
+.vD-ring text{font-size:13px;font-weight:700;fill:var(--text);font-family:var(--font-sans)}
+
+/* E — stacked, weighted */
+.vE-stack{margin-top:24px;display:grid;gap:2px;justify-items:center}
+.vE-1{font-size:clamp(30px,4.6vw,48px);font-weight:700;letter-spacing:-.022em;color:var(--brand-deep)}
+.vE-2{font-size:clamp(19px,2.6vw,26px);font-weight:600;letter-spacing:-.015em;color:var(--text-soft)}
+.vE-3{font-size:clamp(15px,2vw,19px);font-weight:600;color:var(--text-tertiary)}
+.vE-kicker{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text-tertiary);margin-top:22px}
+
+/* F — one primary pill + plain text tail */
+.vF-wrap{margin-top:26px;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:14px}
+.vF-pill{font-size:18px;font-weight:700;color:#000;background:var(--brand);border:1px solid #000;border-radius:var(--r-pill);padding:12px 28px;box-shadow:var(--shadow-card)}
+.vF-tail{font-size:15px;font-weight:600;color:var(--text-secondary);text-align:left}
+.vF-tail small{display:block;font-size:13px;color:var(--text-tertiary);font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px}
+
+/* G — bracket / terminal */
+.vG-line{margin-top:24px;font-size:clamp(18px,2.5vw,24px);font-weight:700;letter-spacing:-.015em}
+.vG-brace{color:var(--brand-deep);font-weight:700}
+.vG-main{background:var(--tint-brand);border-radius:8px;padding:2px 10px}
+.vG-rest{display:block;font-size:14px;font-weight:600;color:var(--text-tertiary);margin-top:12px;letter-spacing:0}
+</style>
+</head>
+<body>
+
+<!-- 0 -->
+<div class="note-wrap">
+  <p class="tag">Variant <b>0</b> — current: three chips</p>
+  <p class="note">All three roles as pills, AI Engineer filled. Reads as a list of things you'd accept, and the two grey chips take up as much width as the green one.</p>
+</div>
+<div class="stage"><div class="stage-inner">
+  <p class="tagline">I build AI-powered products end to end.</p>
+  <ul class="v0-row">
+    <li class="v0-chip v0-chip--p">AI Engineer</li>
+    <li class="v0-chip">Full-Stack Software Engineer</li>
+    <li class="v0-chip">Software Development Engineer</li>
+  </ul>
+  <p class="sub">Across internships and freelance work I've owned the whole path to production — the AI layer, the services behind it, and the cloud infrastructure it runs on.</p>
+</div></div>
+
+<!-- A -->
+<div class="note-wrap">
+  <p class="tag">Variant <b>A</b> — headline role</p>
+  <p class="note">AI Engineer becomes display type, at the scale of your name. The other two shrink to a single supporting line. Strongest possible emphasis; the least ambiguity about what you are.</p>
+</div>
+<div class="stage"><div class="stage-inner">
+  <p class="tagline">I build AI-powered products end to end.</p>
+  <p class="vA-role"><span class="vA-mark">AI Engineer</span></p>
+  <p class="vA-also">Full-Stack Software Engineer <span>·</span> Software Development Engineer</p>
+  <p class="sub">Across internships and freelance work I've owned the whole path to production — the AI layer, the services behind it, and the cloud infrastructure it runs on.</p>
+</div></div>
+
+<!-- B -->
+<div class="note-wrap">
+  <p class="tag">Variant <b>B</b> — one typographic line</p>
+  <p class="note">All three on a single line, AI Engineer in full ink with a mint underline, the rest greyed. Quietest option — no boxes, no new shapes, and it collapses gracefully on mobile.</p>
+</div>
+<div class="stage"><div class="stage-inner">
+  <p class="tagline">I build AI-powered products end to end.</p>
+  <p class="vB-line"><b>AI Engineer</b><span class="vB-sep">/</span>Full-Stack Software Engineer<span class="vB-sep">/</span>Software Development Engineer</p>
+  <p class="sub">Across internships and freelance work I've owned the whole path to production — the AI layer, the services behind it, and the cloud infrastructure it runs on.</p>
+</div></div>
+
+<!-- C -->
+<div class="note-wrap">
+  <p class="tag">Variant <b>C</b> — typewriter cycle</p>
+  <p class="note">One line that types through the three titles, pausing longest on AI Engineer. Draws the eye and shows range in one slot — but it is the one option that moves, and it hides two of three roles at any instant (bad for a recruiter skimming, and for ATS text scrapes it still works since all three are in the DOM).</p>
+</div>
+<div class="stage"><div class="stage-inner">
+  <p class="tagline">I build AI-powered products end to end.</p>
+  <p class="vC-line"><span class="vC-fixed">Working as an </span><span class="vC-type" id="typer">AI Engineer</span></p>
+  <p class="sub">Across internships and freelance work I've owned the whole path to production — the AI layer, the services behind it, and the cloud infrastructure it runs on.</p>
+</div></div>
+
+<!-- D -->
+<div class="note-wrap">
+  <p class="tag">Variant <b>D</b> — match cards (jobright homage)</p>
+  <p class="note">Three mini match cards, reusing the floating card already in your hero. The most on-brand option by far — it turns the role list into the product metaphor the whole site is dressed in. Risk: percentages are a claim you're making about yourself, which reads as playful to some and as odd to others.</p>
+</div>
+<div class="stage"><div class="stage-inner">
+  <p class="tagline">I build AI-powered products end to end.</p>
+  <div class="vD-grid">
+    <div class="vD-card vD-card--p">
+      <svg class="vD-ring" viewBox="0 0 56 56" width="46" height="46"><circle cx="28" cy="28" r="24" fill="none" stroke="var(--grey-line)" stroke-width="5"/><circle cx="28" cy="28" r="24" fill="none" stroke="var(--brand)" stroke-width="5" stroke-linecap="round" stroke-dasharray="150.8" stroke-dashoffset="3" transform="rotate(-90 28 28)"/><text x="28" y="33" text-anchor="middle">98%</text></svg>
+      <div><p class="vD-role">AI Engineer</p><p class="vD-lab">Strong match</p></div>
+    </div>
+    <div class="vD-card">
+      <svg class="vD-ring" viewBox="0 0 56 56" width="40" height="40"><circle cx="28" cy="28" r="24" fill="none" stroke="var(--grey-line)" stroke-width="5"/><circle cx="28" cy="28" r="24" fill="none" stroke="var(--brand)" stroke-width="5" stroke-linecap="round" stroke-dasharray="150.8" stroke-dashoffset="18" transform="rotate(-90 28 28)"/><text x="28" y="33" text-anchor="middle">94%</text></svg>
+      <div><p class="vD-role">Full-Stack SWE</p><p class="vD-lab">Strong match</p></div>
+    </div>
+    <div class="vD-card">
+      <svg class="vD-ring" viewBox="0 0 56 56" width="40" height="40"><circle cx="28" cy="28" r="24" fill="none" stroke="var(--grey-line)" stroke-width="5"/><circle cx="28" cy="28" r="24" fill="none" stroke="var(--brand)" stroke-width="5" stroke-linecap="round" stroke-dasharray="150.8" stroke-dashoffset="24" transform="rotate(-90 28 28)"/><text x="28" y="33" text-anchor="middle">92%</text></svg>
+      <div><p class="vD-role">SDE</p><p class="vD-lab">Strong match</p></div>
+    </div>
+  </div>
+  <p class="sub">Across internships and freelance work I've owned the whole path to production — the AI layer, the services behind it, and the cloud infrastructure it runs on.</p>
+</div></div>
+
+<!-- E -->
+<div class="note-wrap">
+  <p class="tag">Variant <b>E</b> — weighted stack</p>
+  <p class="note">Three lines, three sizes — the hierarchy is the message: this first, then this, then this. Honest about priority in a way a row of equal chips can't be. Costs vertical space in the hero.</p>
+</div>
+<div class="stage"><div class="stage-inner">
+  <p class="tagline">I build AI-powered products end to end.</p>
+  <p class="vE-kicker">Open to</p>
+  <div class="vE-stack">
+    <p class="vE-1">AI Engineer</p>
+    <p class="vE-2">Full-Stack Software Engineer</p>
+    <p class="vE-3">Software Development Engineer</p>
+  </div>
+  <p class="sub">Across internships and freelance work I've owned the whole path to production — the AI layer, the services behind it, and the cloud infrastructure it runs on.</p>
+</div></div>
+
+<!-- F -->
+<div class="note-wrap">
+  <p class="tag">Variant <b>F</b> — one pill, quiet tail</p>
+  <p class="note">Only AI Engineer gets a shape; the other two sit beside it as small print under an "also open to" label. Keeps the single strong token from the current version but stops the grey chips competing for width.</p>
+</div>
+<div class="stage"><div class="stage-inner">
+  <p class="tagline">I build AI-powered products end to end.</p>
+  <div class="vF-wrap">
+    <span class="vF-pill">AI Engineer</span>
+    <p class="vF-tail"><small>Also open to</small>Full-Stack Software Engineer<br>Software Development Engineer</p>
+  </div>
+  <p class="sub">Across internships and freelance work I've owned the whole path to production — the AI layer, the services behind it, and the cloud infrastructure it runs on.</p>
+</div></div>
+
+<!-- G -->
+<div class="note-wrap">
+  <p class="tag">Variant <b>G</b> — highlighted phrase</p>
+  <p class="note">Reads as a sentence rather than a label set, with AI Engineer marked by a mint wash. Warmest and most human of the options; weakest as a scannable keyword block.</p>
+</div>
+<div class="stage"><div class="stage-inner">
+  <p class="tagline">I build AI-powered products end to end.</p>
+  <p class="vG-line">Hire me as an <span class="vG-main">AI Engineer</span>
+    <span class="vG-rest">— or a full-stack SWE / SDE when the work needs one</span>
+  </p>
+  <p class="sub">Across internships and freelance work I've owned the whole path to production — the AI layer, the services behind it, and the cloud infrastructure it runs on.</p>
+</div></div>
+
+<script>
+(function () {
+  var el = document.getElementById('typer')
+  if (!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+  var roles = ['AI Engineer', 'Full-Stack Software Engineer', 'Software Development Engineer']
+  var r = 0, i = 0, deleting = false
+  function tick() {
+    var word = roles[r]
+    i += deleting ? -1 : 1
+    el.textContent = word.slice(0, i)
+    var wait = deleting ? 40 : 90
+    if (!deleting && i === word.length) { deleting = true; wait = r === 0 ? 2200 : 1100 }
+    else if (deleting && i === 0) { deleting = false; r = (r + 1) % roles.length; wait = 260 }
+    setTimeout(tick, wait)
+  }
+  setTimeout(tick, 900)
+})()
+</script>
+</body>
+</html>

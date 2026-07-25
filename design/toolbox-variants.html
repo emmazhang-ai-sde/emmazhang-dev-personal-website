@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Toolbox treatments — variants</title>
+<style>
+:root {
+  color-scheme: light dark;
+  --bg:#fff; --bg-alt:#f7f8f9; --card-bg:#fff;
+  --text:#000; --text-soft:#232424; --text-secondary:#4b5253; --text-tertiary:#9ca3af;
+  --brand:#00f0a0; --brand-deep:#0a7d47; --link:#1ca05c; --tint-brand:rgba(0,240,160,.25);
+  --chip-ink:#333b37; --ink-border:#000; --grey-line:#eaeaea;
+  --shadow-card:0 8px 32px 0 rgba(0,37,106,.04);
+  --shadow-lift:0 16px 40px 0 rgba(0,37,106,.1);
+  --r-card:16px; --r-block:24px; --r-pill:28px;
+  --font-sans:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue','Segoe UI',Roboto,Arial,sans-serif;
+  --font-mono:'SF Mono',SFMono-Regular,ui-monospace,Menlo,Consolas,monospace;
+  --ease-out:cubic-bezier(.25,.1,.25,1);
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#101411; --bg-alt:#161d19; --card-bg:#1a231e;
+    --text:#f0f7f2; --text-soft:#d8e2db; --text-secondary:#b3c0b7; --text-tertiary:#93a398;
+    --brand-deep:#3ad894; --link:#3ddb8a; --tint-brand:rgba(0,240,160,.18);
+    --chip-ink:#d5e0d8; --ink-border:#e6efe9; --grey-line:#263129;
+    --shadow-card:0 8px 32px 0 rgba(0,0,0,.3); --shadow-lift:0 16px 40px 0 rgba(0,0,0,.5);
+  }
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;font-family:var(--font-sans);font-size:17px;line-height:1.47;letter-spacing:-.022em;color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4,p,ul{margin:0}
+.wrap{max-width:980px;margin:0 auto;padding:0 22px}
+.variant{padding:56px 0 64px;border-bottom:1px dashed var(--grey-line)}
+.tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-tertiary);margin-bottom:6px}
+.tag b{color:var(--link)}
+.note{font-size:14px;color:var(--text-secondary);max-width:680px;margin-bottom:28px}
+.section-title{font-size:clamp(28px,4vw,40px);font-weight:700;letter-spacing:-.015em;margin-bottom:28px}
+.replay{font-size:13px;font-weight:600;color:var(--text);background:none;border:1px solid var(--grey-line);border-radius:var(--r-pill);padding:7px 16px;cursor:pointer;margin-bottom:18px;font-family:inherit}
+.replay:hover{border-color:var(--brand)}
+
+/* shared panel + rows (variant 0 baseline) */
+.panel{background:var(--bg-alt);border-radius:var(--r-block);padding:12px 44px}
+.row{display:grid;grid-template-columns:200px 1fr;gap:28px;align-items:baseline;padding:26px 0;border-bottom:1px solid var(--grey-line)}
+.row:last-child{border-bottom:none}
+.cat{font-size:17px;font-weight:700;letter-spacing:-.01em}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-size:14px;font-weight:600;letter-spacing:-.01em;color:var(--bg);background:var(--chip-ink);border-radius:var(--r-pill);padding:9px 17px;white-space:nowrap}
+
+/* A — cascade reveal */
+.cascade .chip{opacity:0;transform:translateY(10px) scale(.96);transition:opacity .45s var(--ease-out),transform .45s var(--ease-out)}
+.cascade.play .chip{opacity:1;transform:none}
+
+/* B — marquee */
+.mq{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.mq-track{display:flex;gap:8px;width:max-content;animation:slide 26s linear infinite}
+.mq:nth-of-type(even) .mq-track{animation-direction:reverse}
+.mq:hover .mq-track{animation-play-state:paused}
+@keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.mq-rows{display:grid;gap:10px}
+
+/* C — category cards */
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.card{background:var(--card-bg);border-radius:var(--r-card);box-shadow:var(--shadow-card);padding:22px 24px;transition:box-shadow .25s var(--ease-out)}
+.card:hover{box-shadow:var(--shadow-lift)}
+.card h4{font-size:13px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--text-tertiary);padding-bottom:12px;border-bottom:2px solid var(--brand);margin-bottom:16px}
+
+/* D — terminal */
+.term{background:#0f1512;border-radius:var(--r-card);padding:22px 24px;font-family:var(--font-mono);font-size:13.5px;line-height:1.85;letter-spacing:0;overflow-x:auto}
+.term-bar{display:flex;gap:7px;margin-bottom:16px}
+.term-bar i{width:9px;height:9px;border-radius:50%;background:#3a4441;display:block}
+.term-bar i:first-child{background:#00f0a0}
+.t-key{color:#7be1c4}.t-str{color:#e8f2ec}.t-punc{color:#5d6b64}.t-cmt{color:#5d6b64;font-style:italic}
+
+/* E — weighted */
+.w-chips{display:flex;flex-wrap:wrap;gap:9px;align-items:center}
+.w-1{font-size:16px;font-weight:700;color:#000;background:var(--brand);padding:11px 20px;border-radius:var(--r-pill)}
+.w-2{font-size:14px;font-weight:600;color:var(--bg);background:var(--chip-ink);padding:9px 17px;border-radius:var(--r-pill)}
+.w-3{font-size:13px;font-weight:600;color:var(--text-secondary);background:none;border:1px solid var(--grey-line);padding:7px 14px;border-radius:var(--r-pill)}
+
+/* F — spotlight hover */
+.spot .chip{transition:opacity .25s var(--ease-out),transform .25s var(--ease-out)}
+.spot:hover .chip{opacity:.34}
+.spot .chip:hover{opacity:1;transform:translateY(-3px)}
+
+/* G — mint for the ones that matter */
+.chip--key{background:var(--brand);color:#000}
+@media (max-width:800px){
+  .row{grid-template-columns:1fr;gap:14px}
+  .cards{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- 0 -->
+<div class="variant">
+  <p class="tag">Variant <b>0</b> — current</p>
+  <p class="note">Grey panel, category label left, solid chips right. No motion, no hover. Calm, but every chip carries identical weight, so nothing guides the eye.</p>
+  <h2 class="section-title">The toolbox.</h2>
+  <div class="panel">
+    <div class="row"><h3 class="cat">Languages/Framework</h3><div class="chips">
+      <span class="chip">Java</span><span class="chip">Python</span><span class="chip">C#</span><span class="chip">C++</span><span class="chip">TypeScript/JavaScript</span><span class="chip">React.js</span><span class="chip">Next.js</span></div></div>
+    <div class="row"><h3 class="cat">AI / ML</h3><div class="chips">
+      <span class="chip">RAG</span><span class="chip">LangChain</span><span class="chip">LangGraph</span><span class="chip">LangSmith</span><span class="chip">MLOps</span></div></div>
+    <div class="row"><h3 class="cat">Databases</h3><div class="chips">
+      <span class="chip">MySQL</span><span class="chip">PostgreSQL</span><span class="chip">MongoDB</span><span class="chip">Redis</span><span class="chip">DynamoDB</span><span class="chip">ElasticSearch</span></div></div>
+  </div>
+</div>
+
+<!-- A -->
+<div class="variant">
+  <p class="tag">Variant <b>A</b> — cascade reveal</p>
+  <p class="note">Chips fade and rise in sequence when the section scrolls into view, row by row. Motion happens once and then it's still — the calmest way to add life. Respects reduced-motion.</p>
+  <button class="replay" data-replay="cascade">▸ Replay</button>
+  <div class="panel cascade" id="cascade">
+    <div class="row"><h3 class="cat">Languages/Framework</h3><div class="chips">
+      <span class="chip">Java</span><span class="chip">Python</span><span class="chip">C#</span><span class="chip">C++</span><span class="chip">TypeScript/JavaScript</span><span class="chip">React.js</span><span class="chip">Next.js</span></div></div>
+    <div class="row"><h3 class="cat">AI / ML</h3><div class="chips">
+      <span class="chip">RAG</span><span class="chip">LangChain</span><span class="chip">LangGraph</span><span class="chip">LangSmith</span><span class="chip">MLOps</span></div></div>
+    <div class="row"><h3 class="cat">Databases</h3><div class="chips">
+      <span class="chip">MySQL</span><span class="chip">PostgreSQL</span><span class="chip">MongoDB</span><span class="chip">Redis</span><span class="chip">DynamoDB</span><span class="chip">ElasticSearch</span></div></div>
+  </div>
+</div>
+
+<!-- B -->
+<div class="variant">
+  <p class="tag">Variant <b>B</b> — marquee</p>
+  <p class="note">Rows scroll continuously, alternating direction, pausing when you hover. Reads as energy and fits a lot of chips in little height — but it never stops, and a recruiter cannot scan a moving list.</p>
+  <h2 class="section-title">The toolbox.</h2>
+  <div class="panel" style="padding:26px 0">
+    <div class="mq-rows">
+      <div class="mq"><div class="mq-track">
+        <span class="chip">Java</span><span class="chip">Python</span><span class="chip">C#</span><span class="chip">C++</span><span class="chip">TypeScript/JavaScript</span><span class="chip">React.js</span><span class="chip">Next.js</span><span class="chip">Spring Boot</span><span class="chip">FastAPI/Flask</span><span class="chip">Django</span>
+        <span class="chip">Java</span><span class="chip">Python</span><span class="chip">C#</span><span class="chip">C++</span><span class="chip">TypeScript/JavaScript</span><span class="chip">React.js</span><span class="chip">Next.js</span><span class="chip">Spring Boot</span><span class="chip">FastAPI/Flask</span><span class="chip">Django</span>
+      </div></div>
+      <div class="mq"><div class="mq-track">
+        <span class="chip">RAG</span><span class="chip">LangChain</span><span class="chip">LangGraph</span><span class="chip">LangSmith</span><span class="chip">MLOps</span><span class="chip">PostgreSQL</span><span class="chip">Redis</span><span class="chip">DynamoDB</span><span class="chip">ElasticSearch</span><span class="chip">Kafka/Flink</span>
+        <span class="chip">RAG</span><span class="chip">LangChain</span><span class="chip">LangGraph</span><span class="chip">LangSmith</span><span class="chip">MLOps</span><span class="chip">PostgreSQL</span><span class="chip">Redis</span><span class="chip">DynamoDB</span><span class="chip">ElasticSearch</span><span class="chip">Kafka/Flink</span>
+      </div></div>
+      <div class="mq"><div class="mq-track">
+        <span class="chip">AWS</span><span class="chip">Docker</span><span class="chip">Kubernetes</span><span class="chip">CI/CD</span><span class="chip">Prometheus</span><span class="chip">Grafana</span><span class="chip">Git</span><span class="chip">GitHub Actions</span><span class="chip">Azure</span>
+        <span class="chip">AWS</span><span class="chip">Docker</span><span class="chip">Kubernetes</span><span class="chip">CI/CD</span><span class="chip">Prometheus</span><span class="chip">Grafana</span><span class="chip">Git</span><span class="chip">GitHub Actions</span><span class="chip">Azure</span>
+      </div></div>
+    </div>
+  </div>
+</div>
+
+<!-- C -->
+<div class="variant">
+  <p class="tag">Variant <b>C</b> — category cards</p>
+  <p class="note">Each category becomes its own card, matching the two-card Education section you just built. Most consistent with the rest of the page; costs more vertical space than rows.</p>
+  <h2 class="section-title">The toolbox.</h2>
+  <div class="cards">
+    <div class="card"><h4>Languages/Framework</h4><div class="chips">
+      <span class="chip">Java</span><span class="chip">Python</span><span class="chip">C#</span><span class="chip">C++</span><span class="chip">TypeScript</span><span class="chip">React.js</span></div></div>
+    <div class="card"><h4>AI / ML</h4><div class="chips">
+      <span class="chip">RAG</span><span class="chip">LangChain</span><span class="chip">LangGraph</span><span class="chip">LangSmith</span><span class="chip">MLOps</span></div></div>
+    <div class="card"><h4>Databases</h4><div class="chips">
+      <span class="chip">MySQL</span><span class="chip">PostgreSQL</span><span class="chip">Redis</span><span class="chip">DynamoDB</span></div></div>
+    <div class="card"><h4>Cloud &amp; DevOps</h4><div class="chips">
+      <span class="chip">AWS</span><span class="chip">Docker</span><span class="chip">Kubernetes</span><span class="chip">CI/CD</span></div></div>
+  </div>
+</div>
+
+<!-- D -->
+<div class="variant">
+  <p class="tag">Variant <b>D</b> — config block</p>
+  <p class="note">The stack as a file an engineer would actually read. Strong personality and unmistakably a developer's page — but it is the least skimmable for a non-technical recruiter, and it breaks the site's typographic system.</p>
+  <h2 class="section-title">The toolbox.</h2>
+  <div class="term">
+    <div class="term-bar"><i></i><i></i><i></i></div>
+<span class="t-cmt">// stack.json</span><br>
+<span class="t-punc">{</span><br>
+&nbsp;&nbsp;<span class="t-key">"languages"</span><span class="t-punc">:</span> <span class="t-punc">[</span><span class="t-str">"Java", "Python", "C#", "C++", "TypeScript"</span><span class="t-punc">],</span><br>
+&nbsp;&nbsp;<span class="t-key">"ai"</span><span class="t-punc">:</span> <span class="t-punc">[</span><span class="t-str">"RAG", "LangChain", "LangGraph", "LangSmith"</span><span class="t-punc">],</span><br>
+&nbsp;&nbsp;<span class="t-key">"data"</span><span class="t-punc">:</span> <span class="t-punc">[</span><span class="t-str">"PostgreSQL", "Redis", "DynamoDB", "ElasticSearch"</span><span class="t-punc">],</span><br>
+&nbsp;&nbsp;<span class="t-key">"cloud"</span><span class="t-punc">:</span> <span class="t-punc">[</span><span class="t-str">"AWS", "Docker", "Kubernetes", "CI/CD"</span><span class="t-punc">]</span><br>
+<span class="t-punc">}</span>
+  </div>
+</div>
+
+<!-- E -->
+<div class="variant">
+  <p class="tag">Variant <b>E</b> — weighted by depth</p>
+  <p class="note">Three tiers: mint for what you'd claim in an interview, solid for working knowledge, outline for exposure. Says far more than a flat list — and answers the question every recruiter actually has. Requires you to rank honestly, and the outline tier quietly admits "less strong".</p>
+  <h2 class="section-title">The toolbox.</h2>
+  <div class="panel">
+    <div class="row"><h3 class="cat">AI / ML</h3><div class="w-chips">
+      <span class="w-1">RAG</span><span class="w-1">LangChain</span><span class="w-2">LangSmith</span><span class="w-2">MLOps</span><span class="w-3">LangGraph</span></div></div>
+    <div class="row"><h3 class="cat">Languages</h3><div class="w-chips">
+      <span class="w-1">Python</span><span class="w-1">TypeScript</span><span class="w-2">Java</span><span class="w-3">C#</span><span class="w-3">C++</span></div></div>
+    <div class="row"><h3 class="cat">Cloud &amp; DevOps</h3><div class="w-chips">
+      <span class="w-1">AWS</span><span class="w-2">Docker</span><span class="w-2">CI/CD</span><span class="w-3">Kubernetes</span><span class="w-3">Azure</span></div></div>
+  </div>
+</div>
+
+<!-- F -->
+<div class="variant">
+  <p class="tag">Variant <b>F</b> — spotlight on hover</p>
+  <p class="note">Hover the panel and everything dims except the chip under your cursor, which lifts. Playful and makes the section feel interactive without moving on its own. Hover over the rows below to try it.</p>
+  <h2 class="section-title">The toolbox.</h2>
+  <div class="panel spot">
+    <div class="row"><h3 class="cat">Languages/Framework</h3><div class="chips">
+      <span class="chip">Java</span><span class="chip">Python</span><span class="chip">C#</span><span class="chip">C++</span><span class="chip">TypeScript/JavaScript</span><span class="chip">React.js</span><span class="chip">Next.js</span></div></div>
+    <div class="row"><h3 class="cat">AI / ML</h3><div class="chips">
+      <span class="chip">RAG</span><span class="chip">LangChain</span><span class="chip">LangGraph</span><span class="chip">LangSmith</span><span class="chip">MLOps</span></div></div>
+  </div>
+</div>
+
+<!-- G -->
+<div class="variant">
+  <p class="tag">Variant <b>G</b> — mint on what matters</p>
+  <p class="note">Keeps the current layout untouched and simply turns the AI-relevant chips mint. One-line change, no motion, and it makes the page argue for the AI Engineer headline instead of listing everything evenly.</p>
+  <h2 class="section-title">The toolbox.</h2>
+  <div class="panel">
+    <div class="row"><h3 class="cat">Languages/Framework</h3><div class="chips">
+      <span class="chip chip--key">Python</span><span class="chip">Java</span><span class="chip">C#</span><span class="chip">C++</span><span class="chip chip--key">TypeScript/JavaScript</span><span class="chip">React.js</span><span class="chip">Next.js</span></div></div>
+    <div class="row"><h3 class="cat">AI / ML</h3><div class="chips">
+      <span class="chip chip--key">RAG</span><span class="chip chip--key">LangChain</span><span class="chip chip--key">LangGraph</span><span class="chip chip--key">LangSmith</span><span class="chip chip--key">MLOps</span></div></div>
+    <div class="row"><h3 class="cat">Cloud &amp; DevOps</h3><div class="chips">
+      <span class="chip chip--key">AWS</span><span class="chip">Docker</span><span class="chip">Kubernetes</span><span class="chip">CI/CD</span><span class="chip">Prometheus</span><span class="chip">Grafana</span></div></div>
+  </div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  var box = document.getElementById('cascade')
+
+  function stagger(el) {
+    var chips = el.querySelectorAll('.chip')
+    el.classList.remove('play')
+    chips.forEach(function (c) { c.style.transitionDelay = '0ms' })
+    // force reflow so the reset takes effect before replaying
+    void el.offsetWidth
+    chips.forEach(function (c, i) { c.style.transitionDelay = (i * 45) + 'ms' })
+    el.classList.add('play')
+  }
+
+  if (reduce) {
+    box.classList.add('play')
+  } else {
+    new IntersectionObserver(function (entries, obs) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { stagger(box); obs.unobserve(e.target) }
+      })
+    }, { threshold: 0.2 }).observe(box)
+
+    document.querySelector('[data-replay]').addEventListener('click', function () { stagger(box) })
+  }
+})()
+</script>
+</body>
+</html>
