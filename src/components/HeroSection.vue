@@ -1,5 +1,10 @@
 <script setup>
+import { computed } from 'vue'
 import { profile } from '../data/resume.js'
+
+// The role marked `primary` becomes the headline; the rest trail beneath it.
+const primaryRole = computed(() => profile.roles.find((r) => r.primary) ?? profile.roles[0])
+const otherRoles = computed(() => profile.roles.filter((r) => r !== primaryRole.value))
 </script>
 
 <template>
@@ -10,7 +15,17 @@ import { profile } from '../data/resume.js'
         <span class="hero-highlight">{{ profile.name }}</span>
       </h1>
       <p class="hero-tagline" v-reveal="{ delay: 220 }">{{ profile.tagline }}</p>
-      <p class="hero-subtitle" v-reveal="{ delay: 320 }">{{ profile.subtitle }}</p>
+
+      <p class="hero-role" v-reveal="{ delay: 300 }">
+        <span class="hero-role-mark">{{ primaryRole.label }}</span>
+      </p>
+      <p class="hero-role-also" v-reveal="{ delay: 340 }">
+        <template v-for="(role, i) in otherRoles" :key="role.label">
+          <span v-if="i" class="hero-role-sep" aria-hidden="true">·</span>{{ role.label }}
+        </template>
+      </p>
+
+      <p class="hero-subtitle" v-reveal="{ delay: 380 }">{{ profile.subtitle }}</p>
       <div class="hero-actions" v-reveal="{ delay: 420 }">
         <a class="btn-ink" :href="`mailto:${profile.email}`">Get in touch</a>
         <a v-if="profile.resumeUrl" class="btn-mint" :href="profile.resumeUrl">Download résumé</a>
@@ -37,7 +52,7 @@ import { profile } from '../data/resume.js'
         <text x="28" y="33" text-anchor="middle" class="match-score">98%</text>
       </svg>
       <div>
-        <p class="match-role">Software Engineer</p>
+        <p class="match-role">AI Engineer</p>
         <p class="match-label">Strong match</p>
       </div>
     </aside>
@@ -90,6 +105,39 @@ import { profile } from '../data/resume.js'
   letter-spacing: -0.015em;
   line-height: 1.15;
   margin-top: 24px;
+}
+
+/* Target roles. The primary one is display type wearing the mint mark — the
+   same highlight as the name — so it is unmissable; the other two follow as
+   one supporting line, large enough to read as real titles rather than fine
+   print, but held below the tagline so the hierarchy stays intact. */
+.hero-role {
+  font-size: clamp(34px, 5.6vw, 60px);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.04;
+  margin-top: 22px;
+}
+
+.hero-role-mark {
+  background: var(--grad-mint);
+  border-radius: 16px;
+  padding: 0 0.18em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.hero-role-also {
+  font-size: clamp(17px, 2.1vw, 22px);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--text-soft);
+  margin-top: 18px;
+}
+
+.hero-role-sep {
+  color: var(--text-tertiary);
+  margin: 0 10px;
 }
 
 .hero-subtitle {
@@ -163,6 +211,14 @@ import { profile } from '../data/resume.js'
 }
 
 @media (max-width: 734px) {
+  .hero-role-also {
+    line-height: 1.35;
+  }
+
+  .hero-role-sep {
+    margin: 0 6px;
+  }
+
   .hero {
     border-radius: 0 0 64px 0;
     padding-top: 120px;

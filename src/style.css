@@ -21,6 +21,9 @@
 
   /* brand */
   --brand: #00f0a0;
+  /* ink-weight green — bright enough to read as the mint family, dark enough
+     to hold up as text rather than sit behind it (5.2:1 on white) */
+  --brand-deep: #0a7d47;
   --link: #1ca05c;
   --tint-brand: rgba(0, 240, 160, 0.25);
 
@@ -33,6 +36,10 @@
   --chip-amber: #b87a00;
   --tint-green: rgba(40, 200, 110, 0.14);
   --chip-green: #178a4c;
+
+  /* solid chip fill — softer than pure ink so a panel full of them doesn't
+     glare; text on it is the page ground, so it inverts in dark mode */
+  --chip-ink: #333b37;
 
   /* lines & borders */
   --ink-border: #000000;
@@ -75,6 +82,7 @@
     --text-secondary: #b3c0b7;
     --text-tertiary: #93a398;
 
+    --brand-deep: #3ad894;
     --link: #3ddb8a;
     --tint-brand: rgba(0, 240, 160, 0.18);
 
@@ -87,6 +95,7 @@
     --tint-green: rgba(40, 200, 110, 0.18);
     --chip-green: #4fd88a;
 
+    --chip-ink: #d5e0d8;
     --ink-border: #e6efe9;
     --grey-line: #263129;
 

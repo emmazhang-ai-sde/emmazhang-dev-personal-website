@@ -19,6 +19,11 @@ const toMonthCount = (point) => {
   return Number(year) * 12 + (MONTH_INDEX[month] ?? 0)
 }
 
+// A job is either one role, or several held at the same company. Normalise
+// both into a list so one template renders them; only multi-role cards show
+// per-role dates, since single-role cards already carry theirs on the rail.
+const rolesOf = (job) => job.roles ?? [{ role: job.role, bullets: job.bullets, stack: job.stack }]
+
 const spanMonths = (dates) => {
   const parts = dateParts(dates)
   if (parts.length < 2) return 1
@@ -59,24 +64,36 @@ const spanMonths = (dates) => {
             </div>
 
             <div class="job-body">
-              <div class="job-header">
-                <div>
-                  <h3 class="job-role">{{ job.role }}</h3>
-                  <p class="job-company">
-                    {{ job.company }}
-                    <span class="job-descriptor"> — {{ job.descriptor }}</span>
-                  </p>
+              <!-- one section per role; roles at the same company share a card
+                   and are separated by a rule -->
+              <section
+                v-for="(post, r) in rolesOf(job)"
+                :key="post.role"
+                class="job-post"
+                :class="{ 'job-post--next': r > 0 }"
+              >
+                <div class="job-header">
+                  <div>
+                    <h3 class="job-role">{{ post.role }}</h3>
+                    <p v-if="r === 0" class="job-company">
+                      {{ job.company }}
+                      <span class="job-descriptor"> — {{ job.descriptor }}</span>
+                    </p>
+                    <p v-if="post.dates" class="job-post-dates">{{ post.dates }}</p>
+                  </div>
+                  <p v-if="r === 0" class="job-location">{{ job.location }}</p>
                 </div>
-                <p class="job-location">{{ job.location }}</p>
-              </div>
 
-              <ul class="job-bullets">
-                <li v-for="bullet in job.bullets" :key="bullet">{{ bullet }}</li>
-              </ul>
+                <ul class="job-bullets">
+                  <li v-for="bullet in post.bullets" :key="bullet">{{ bullet }}</li>
+                </ul>
 
-              <div class="job-stack">
-                <span v-for="tech in job.stack" :key="tech" class="chip chip--mint">{{ tech }}</span>
-              </div>
+                <div class="job-stack">
+                  <span v-for="tech in post.stack" :key="tech" class="chip chip--mint">{{
+                    tech
+                  }}</span>
+                </div>
+              </section>
             </div>
           </article>
         </div>
@@ -107,7 +124,7 @@ const spanMonths = (dates) => {
 .timeline-item:not(:last-child)::after {
   content: '';
   position: absolute;
-  left: 147px;
+  left: 145.5px;
   top: calc(58px + var(--months) * var(--mpx));
   bottom: 2px;
   width: 2px;
@@ -118,7 +135,6 @@ const spanMonths = (dates) => {
 .timeline-node {
   position: absolute;
   border-radius: 50%;
-  border: 1.5px solid var(--ink-border);
 }
 
 .timeline-node--end {
@@ -142,13 +158,12 @@ const spanMonths = (dates) => {
 /* the duration bar: scaled to real time via --mpx (px per month) */
 .timeline-span {
   position: absolute;
-  left: 145.5px;
+  left: 144px;
   top: 32px;
   height: calc(var(--months) * var(--mpx));
   width: 5px;
   border-radius: 3px;
   background: var(--brand);
-  border: 1px solid var(--ink-border);
 }
 
 .timeline-date {
@@ -217,6 +232,20 @@ const spanMonths = (dates) => {
   padding: 28px 32px 32px;
 }
 
+/* a second role at the same company: divided by a rule, not a new card */
+.job-post--next {
+  margin-top: 32px;
+  padding-top: 32px;
+  border-top: 1px solid var(--grey-line);
+}
+
+.job-post-dates {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  margin-top: 4px;
+}
+
 .job-header {
   display: flex;
   justify-content: space-between;
@@ -274,7 +303,7 @@ const spanMonths = (dates) => {
   }
 
   .timeline-item:not(:last-child)::after {
-    left: 4px;
+    left: 4.5px;
     top: calc(46px + var(--months) * var(--mpx));
     bottom: 2px;
     height: auto;
@@ -289,14 +318,14 @@ const spanMonths = (dates) => {
   }
 
   .timeline-node--start {
-    left: 3px;
+    left: 2.5px;
     top: calc(30px + var(--months) * var(--mpx));
     width: 6px;
     height: 6px;
   }
 
   .timeline-span {
-    left: 4px;
+    left: 3.5px;
     top: 24px;
     height: calc(var(--months) * var(--mpx));
     width: 4px;

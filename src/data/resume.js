@@ -4,8 +4,15 @@ export const profile = {
   name: 'Emma Zhang',
   greeting: "Hello, I'm",
   tagline: 'I build AI-powered products end to end.',
+  // Target roles, rendered as chips under the tagline. `primary: true` gets the
+  // filled mint treatment — exactly one role should carry it.
+  roles: [
+    { label: 'AI Engineer', primary: true },
+    { label: 'Full-Stack Software Engineer' },
+    { label: 'Software Development Engineer' },
+  ],
   subtitle:
-    'Math student at the University of Illinois with a CS minor — shipping real-time voice agents, serverless backends, and the infrastructure underneath them.',
+    "Across internships and freelance work I've owned the whole path to production: the AI layer, the services behind it, and the cloud infrastructure it runs on.",
   email: 'sz94@illinois.edu',
   location: 'Champaign, IL',
   // Drop the PDF into /public and update this path when ready
@@ -24,10 +31,11 @@ export const experience = [
     dates: 'May 2026 – Oct 2026',
     location: 'Atlanta, GA · Remote',
     bullets: [
-      'Built an AI sales intelligence platform that reads caller intent and deal signals across the full sales funnel, routing calls between an AI voice agent and human reps automatically',
-      'Designed a two-pass speech recognition pipeline — real-time streaming for live captions, then batch re-transcription for accuracy — with transcripts and audio archived to S3',
-      'Architected a real-time phone voice agent grounded in company-specific RAG knowledge bases and caller history to generate context-aware responses',
-      'Instrumented LLM observability with Prometheus, Grafana, and LangSmith to track cost, latency, and error rates in production.',
+      "Designed and implemented an AI Sales Intelligence Platform for sales reps to analyze caller intent and deal signals across the full sales funnel using RAG, LangChain, Next.js, TypeScript, and PostgreSQL, orchestrating automated inbound/outbound routing to an AI voice agent or human rep, live transcription, and post-call semantic analysis for sales coaching",
+      "Developed a two-pass Automatic Speech Recognition: real-time streaming transcription for live captioning, followed by a batch re-transcription for improving accuracy, archiving transcripts and call audio to AWS S3",
+      "Architected a real-time phone-call voice agent that retrieved relevant data from company-specific RAG knowledge bases and caller history to identify the current sales funnel stage and generate context-aware responses",
+      "Built a post-call analysis pipeline using an LLM to refine speech-to-text transcripts and generate structured insights on key topics, customer hesitation, objections, and coaching opportunities, with OpenSearch for persistent storage",
+      "Instrumented MLOps observability via Prometheus, Grafana, and LangSmith to monitor LLM cost, latency and error rates.",
     ],
     stack: ['RAG', 'LangChain', 'Next.js', 'TypeScript', 'PostgreSQL', 'OpenSearch', 'AWS'],
   },
@@ -38,40 +46,46 @@ export const experience = [
     dates: 'Dec 2025 – Jan 2026',
     location: "Xi'an, China",
     bullets: [
-      'Shipped a React single-page app covering the whole customer flow — ordering, live tracking, payment, and pickup',
-      'Built serverless REST APIs on API Gateway, Lambda, and DynamoDB, including pickup QR code generation',
-      'Defined the entire stack as code with AWS CDK; Docker-based CI/CD cut rollout time by 60%',
-      'Added a Redis cache layer that cut repeated database queries by over 70%.',
+      "Developed and deployed a React based Single Page Application (SPA) for a local matcha house that streamlined customers experience for order placement, tracking, and payment processing",
+      "Built RESTful APIs using API Gateway and AWS Lambda for order management, covering order creation, real-time tracking, history retrieval, and pick-up QR code generation, with DynamoDB as persistent storage",
+      "Utilized AWS CDK with TypeScript to construct service infrastructure via CloudFormation, implementing infrastructure as code and streamlining CI/CD pipelines via Docker, integrated API integration tests, accelerating rollout efficiency by 60%",
+      "Improved recent order query performance with Redis as cache layer, achieving a Redis cache hit rate of 60%, and reducing repeated MySQL queries by over 70%",
+      "Built automated test suite using TypeScript and Vitest, with unit tests for core business logic and Supertest-based integration tests covering authorization, payment, pickup verification, and security attack paths.",
     ],
     stack: ['React', 'TypeScript', 'AWS Lambda', 'DynamoDB', 'CDK', 'Redis', 'Vitest'],
   },
   {
+    // One company, two consecutive roles — rendered as a single card with a
+    // rule between the roles. `roles` replaces the top-level role/bullets/
+    // stack; `dates` stays the overall span, which drives the timeline axis.
     company: 'Chongqing Jingkai Trading',
     descriptor: 'B2B cross-border commerce',
-    role: 'Full-Stack Software Engineer Intern',
-    dates: 'Jul 2025 – Aug 2025',
+    dates: 'May 2025 – Aug 2025',
     location: 'Chongqing, China',
-    bullets: [
-      'Built a microservice platform for a cross-border jewelry client on Spring Boot and Spring Cloud',
-      'Kept Prime Day traffic honest with Redis distributed locks and Lua scripts, preventing overselling under heavy load',
-      'Moved transaction management to an event-driven architecture on RocketMQ',
-      'Deployed behind a load balancer with AWS Auto Scaling across multiple EC2 instances for high availability.',
+    roles: [
+      {
+        role: 'Full-Stack Software Engineer Intern',
+        dates: 'Jul 2025 – Aug 2025',
+        bullets: [
+          "Designed and implemented a microservice-based platform for a crystal jewelry client using Spring Boot and Spring Cloud, enabling modular service registration, discovery, and inter-service communication via OpenFeign",
+          "Optimized high-concurrency scenarios for Prime Day by integrating Redis caching with LUA script for inventory control via Distributed Lock, reducing overselling and improving throughput under heavy load",
+          "Implemented an Event-driven architecture using RocketMQ for a decoupled and asynchronous transaction management",
+          "Configured microservices with Spring Cloud Gateway, Consul, and OpenFeign, deployed application, integrated with Load Balancer and AWS AutoScaling group on multiple Linux-based EC2 instances, made service open to public with high availability.",
+        ],
+        stack: ['Java', 'Spring Boot', 'Spring Cloud', 'Redis', 'RocketMQ', 'AWS EC2'],
+      },
+      {
+        role: 'AI Engineer Intern',
+        dates: 'May 2025 – Jun 2025',
+        bullets: [
+          'Built a multilingual AI email assistant for cross-border sellers using Python (FastAPI), LangChain, and OpenAI/Claude APIs, automating email triage, quote retrieval, and bilingual reply generation',
+          'Designed a RAG pipeline using PGVector for embedding computation and ElasticSearch for vector storage, surfacing product descriptions, pricing, and policy data in-context; reduced quote preparation time by 60%',
+          'Architected scalable backend infrastructure with Docker and EKS (Kubernetes), routing inbound email responses through AWS SES with metadata persisted in OpenSearch; sustained P95 latency under 800ms at thousands of emails per day',
+          'Instrumented MLOps observability via Prometheus, Grafana, and LangSmith to monitor LLM cost, latency, and draft quality; enforced AES-GCM encryption and RBAC with JWT for data privacy compliance.',
+        ],
+        stack: ['Python', 'FastAPI', 'LangChain', 'RAG', 'PGVector', 'Elasticsearch', 'Docker', 'EKS'],
+      },
     ],
-    stack: ['Java', 'Spring Boot', 'Spring Cloud', 'Redis', 'RocketMQ', 'AWS EC2'],
-  },
-  {
-    company: 'Chongqing Jingkai Trading',
-    descriptor: 'Internal AI tooling',
-    role: 'AI Engineer Intern',
-    dates: 'May 2025 – Jun 2025',
-    location: 'Chongqing, China',
-    bullets: [
-      'Built a multilingual AI email assistant for cross-border sellers using Python (FastAPI), LangChain, and OpenAI/Claude APIs, automating email triage, quote retrieval, and bilingual reply generation',
-      'Designed a RAG pipeline using PGVector for embedding computation and ElasticSearch for vector storage, surfacing product descriptions, pricing, and policy data in-context; reduced quote preparation time by 60%',
-      'Architected scalable backend infrastructure with Docker and EKS (Kubernetes), routing inbound email responses through AWS SES with metadata persisted in OpenSearch; sustained P95 latency under 800ms at thousands of emails per day',
-      'Instrumented MLOps observability via Prometheus, Grafana, and LangSmith to monitor LLM cost, latency, and draft quality; enforced AES-GCM encryption and RBAC with JWT for data privacy compliance.',
-    ],
-    stack: ['Python', 'FastAPI', 'LangChain', 'RAG', 'PGVector', 'Elasticsearch', 'Docker', 'EKS'],
   },
 ]
 
@@ -113,35 +127,125 @@ export const sideProjects = [
 //     items: [{ title, url, note }] }
 export const collections = []
 
+// Technical Skills, ordered and worded exactly as the résumé lists them.
 export const skills = [
   {
+    category: "Languages/Framework",
+    items: ["Java", "Python", "C#", "C++", "TypeScript/JavaScript", "React.js", "Next.js"],
+  },
+  {
+    // Not on the résumé — added so the markup layer is represented
     category: 'Frontend',
-    items: ['TypeScript', 'React', 'Next.js', 'Vue'],
+    items: ['React', 'Vue.js', 'HTML', 'CSS'],
   },
   {
-    category: 'Backend',
-    items: ['Java', 'Python', 'C++', 'C#', 'Spring Boot', 'Spring Cloud', 'Node.js', 'FastAPI', 'Django', 'gRPC', 'WebSockets', 'Kafka'],
+    category: "Backend & APIs",
+    items: [
+      "Spring Boot",
+      "Spring Cloud",
+      "Node.js/Express",
+      "FastAPI/Flask",
+      "Django",
+      "REST",
+      "gRPC",
+      "WebSockets",
+      "Kafka/Flink",
+      "JWT",
+    ],
   },
   {
+    category: "Databases",
+    items: ["MySQL", "SQL/NoSQL schema design", "PostgreSQL", "MongoDB", "Redis", "DynamoDB", "ElasticSearch"],
+  },
+  {
+    category: "Cloud & DevOps",
+    // two lines, matching the résumé's semicolon: cloud/containers, then tooling
+    groups: [
+      {
+        items: [
+          "AWS",
+          "EC2",
+          "S3",
+          "Lambda",
+          "DynamoDB",
+          "RDS",
+          "SES",
+          "CloudWatch",
+          "EventBridge",
+          "AutoScaling",
+          "CloudFormation/CDK",
+          "Azure",
+          "Docker",
+          "Kubernetes",
+        ],
+      },
+      { items: ["Git", "GitHub Actions", "CI/CD", "Prometheus", "Grafana"] },
+    ],
+  },
+  {
+    category: "Methodologies",
+    items: [
+      "Agile/Scrum",
+      "Distributed Systems Design",
+      "Code Review",
+      "Unit Testing (JUnit, Mockito)",
+      "Integration Testing",
+      "SDLC",
+    ],
+  },
+  {
+    // Not on the résumé's skills block, but the work behind the AI Engineer claim
     category: 'AI / ML',
-    items: ['RAG', 'LangChain', 'LangGraph', 'LangSmith'],
+    items: ['RAG', 'LangChain', 'LangGraph', 'LangSmith', 'MLOps'],
   },
   {
-    category: 'Data & Storage',
-    items: ['PostgreSQL', 'MySQL', 'MongoDB', 'Redis', 'DynamoDB', 'Elasticsearch', 'OpenSearch'],
-  },
-  {
-    category: 'Cloud & DevOps',
-    items: ['AWS', 'Azure', 'Docker', 'Kubernetes', 'AWS CDK', 'GitHub Actions', 'CI/CD'],
+    // Not on the résumé — the tools I actually work with day to day
+    category: 'AI Tools',
+    groups: [
+      { items: ['Codex', 'Claude Code', 'Angular'] },
+      { items: ['Figma', 'Open Design', 'Stitch'] },
+    ],
   },
 ]
 
 export const education = {
   school: 'University of Illinois Urbana-Champaign',
-  degree: 'B.S. in Mathematics, Minor in Computer Science',
-  stats: [
-    { value: '3.7 / 4.0', label: 'GPA' },
-    { value: 'Dec 2026', label: 'Graduating' },
-    { value: 'Math + CS', label: 'Focus' },
+  degree: 'B.S. Mathematics · Minor in Computer Science',
+  gpa: '3.71 / 4.0',
+  location: 'Champaign, IL',
+  // Two columns, rendered in array order — first entry sits on the left.
+  // Both are framed cards with the same border and shadow; the one marked
+  // `lead: true` carries the focus through heavier row ink and its accent.
+  // Listed intro → advanced, so each column reads as a progression.
+  // Rows may pair two courses: '&' joins courses that share a subject
+  // (Calculus II & III), '/' separates two different subjects.
+  coursework: [
+    {
+      category: 'Mathematics',
+      accent: 'ink',
+      items: [
+        'Calculus II & III',
+        'Discrete Mathematics',
+        'Non-Euclidean Geometry',
+        'Combinatorics / Statistics & Probability',
+        'Applied & Abstract Linear Algebra',
+        'Differential Equations',
+        'Real Analysis',
+      ],
+    },
+    {
+      category: 'Computer Science',
+      // `accent` picks the column's colour: 'mint' | 'ink' (no hue) |
+      // 'purple' | 'blue' | 'amber'
+      accent: 'mint',
+      lead: true,
+      items: [
+        'Data Structures',
+        'Algorithms',
+        'Computer Systems',
+        'Database Systems',
+        'Software Engineering',
+      ],
+    },
   ],
 }
